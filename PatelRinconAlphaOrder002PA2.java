@@ -7,32 +7,28 @@
  * 
  */
 
-
-//this is a change by me (ADAM)
-//this is a change by hjape
-
 import java.util.Scanner;   //input library
 import java.util.Calendar;   //date and time library
 import java.util.ArrayList;   //arraylist library
 
 public class PatelRinconAlphaOrder002PA2
 {
-  private static Scanner input = new Scanner(System.in);
+  private static Scanner input = new Scanner(System.in);//int scanner
   
-  private static int firstNmLength = 0;
+  private static int firstNmLength = 0;//int firstNmLength
   
-  public static int checkValidIntInput(String errorMsg){
+  public static int checkValidIntInput(String errorMsg){//checkValidIntInput
     int n = 0;
     boolean validInput = false;
-    do{
+    do{ //do while loop until validInput is false
       validInput = true;
-      try{
+      try{ //try catch loop to check for invalid input
         n = input.nextInt();
       }catch(Exception e){
         System.out.printf("Invalid Input! %s\n", errorMsg);
         validInput = false;
       }
-      input.nextLine();
+      input.nextLine(); //clear buffer
     }while(validInput == !true);
     return n;
   }
@@ -40,7 +36,8 @@ public class PatelRinconAlphaOrder002PA2
   public static double checkValidDoubleInput(String errorMsg){
     double n = 0;
     boolean validInput = false;
-    do
+    
+    do 
     {
       validInput = true;
       try
@@ -121,7 +118,7 @@ public class PatelRinconAlphaOrder002PA2
     
     System.out.printf("Enter the employee's first name press enter than the last name press enter:\n");//user prompt
     
-    while(validInput == !true)
+    while(validInput == !true)//while loop 
     {//error validation
       first = input.nextLine();//user input
       validInput = isAlpha(first);
@@ -243,8 +240,7 @@ public class PatelRinconAlphaOrder002PA2
    */
   public static boolean isAlpha(String name)
   {
-//    return name != null && name.chars().allMatch(Character::isLetter);
-    return name != null && name.matches("^[a-zA-Z]*$");
+  return name != null && name.chars().allMatch(Character::isLetter);
   }//END isAlpha(String): static boolean
 }
        
