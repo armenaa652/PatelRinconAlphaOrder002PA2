@@ -94,12 +94,15 @@ public class PatelRinconAlphaOrder002PA2
     }
     System.out.printf("Total Gross Pay: %.2f\n"
                         + "Total 401K: %.2f\n", grossPayTotal, total401K);
-//    String payrollExpense = String.format("WEEKLY HOURLY EMPLOYEE PAYROLL"
-//                                            + "%n%nDate: %tD"
-//                                            + "%nTime: %tr"
-//                                            + "%n%n%56S %23S", dateTime, dateTime, "GROSS PAY", "401K");
-//    System.out.println(employeeName);
-    System.out.printf("Exiting Weekly Hourly Payroll System\n");
+    
+    Calendar cal = Calendar.getInstance();
+    String payrollExpense = String.format("WEEKLY HOURLY EMPLOYEE PAYROLL"
+                                            + "%n%nDate: " + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR)
+                                            + "%nTime: " + cal.get(Calendar.AM_PM)
+                                            + "%n%n%56S %23S", "GROSS PAY", "401K");
+    
+    System.out.printf(payrollExpense);
+    System.out.printf("\nExiting Weekly Hourly Payroll System\n");
   }
   
   /**
