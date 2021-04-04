@@ -7,10 +7,6 @@
  * 
  */
 
-
-//this is a change by me (ADAM)
-//this is a change by hjape
-
 import java.util.Scanner;   //input library
 import java.util.Calendar;   //date and time library
 import java.util.ArrayList;   //arraylist library
@@ -20,8 +16,15 @@ public class PatelRinconAlphaOrder002PA2
   private static Scanner input = new Scanner(System.in);
   
   private static int firstNmLength = 0;
+  private static int trigger = 1;
   
-  public static int checkValidIntInput(String errorMsg){
+  public static void main(String []args)
+  {
+    generateReport();
+//    System.exit(1);
+  }
+  
+    public static int checkValidIntInput(String errorMsg){
     int n = 0;
     boolean validInput = false;
     do{
@@ -56,17 +59,11 @@ public class PatelRinconAlphaOrder002PA2
     return n;
   }
   
-  public static void main(String []args)
-  {
-    generateReport();
-//    exit(1);
-  }
-  
   public static void generateReport()
   {
     String employeeName = "";//initialize variables
     double payRate = 0, percent401K = 0, grossPayTotal = 0, total401K = 0;
-    int trigger = 0, hoursWorked = 0;
+    int hoursWorked = 0;
     char cont = 'N';
     ArrayList<Double> grossPay = new ArrayList<Double>(), retire401K = new ArrayList<Double>();
     ArrayList<String> employeeNames = new ArrayList<String>();
@@ -81,32 +78,33 @@ public class PatelRinconAlphaOrder002PA2
         hoursWorked = setHoursWorked(employeeName.substring(0, firstNmLength));
         payRate = setPayRate();
         percent401K = set401K();
+        
         employeeNames.add(employeeName);
         grossPay.add(hoursWorked * payRate);
         retire401K.add(hoursWorked * payRate * percent401K * .01);
+        
         System.out.printf("Enter \'Y\' to add another employee or \'N\' to exit:");
         cont = input.nextLine().charAt(0);
       }while(Character.toUpperCase(cont) == 'Y');
+    
+    
+      System.out.printf(String.format("WEEKLY HOURLY EMPLOYEE PAYROLL"
+                                        + "%n%nDate: %tD"
+                                        + "%nTime: %tr" 
+                                        + "%n%n%56S %23S", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), "GROSS PAY", "401K"));
+      
+      for(int i = 0; i < employeeNames.size(); i++)
+      {
+        formatDollarSign(employeeNames.get(i), grossPay.get(i), retire401K.get(i));
+        grossPayTotal += grossPay.get(i);
+        total401K += retire401K.get(i);
+      }
+      System.out.printf("%n%n%25s TOTALS %6s $%,15.2f %8s $%,13.2f", " ", " ", grossPayTotal, " ", total401K);
     }
-    for(int i = 0; i < employeeNames.size(); i++)
+    else
     {
-      System.out.printf("Employee Name: %s\n"
-                        + "Gross Pay: %.2f\n"
-                        + "401K: %.2f\n", employeeNames.get(i), grossPay.get(i), retire401K.get(i));
-      grossPayTotal += grossPay.get(i);
-      total401K += retire401K.get(i);
+      System.out.printf("\nExiting Weekly Hourly Payroll System\n");
     }
-    System.out.printf("Total Gross Pay: %.2f\n"
-                        + "Total 401K: %.2f\n", grossPayTotal, total401K);
-    
-    Calendar cal = Calendar.getInstance();
-    String payrollExpense = String.format("WEEKLY HOURLY EMPLOYEE PAYROLL"
-                                            + "%n%nDate: " + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR)
-                                            + "%nTime: " + cal.get(Calendar.AM_PM)
-                                            + "%n%n%56S %23S", "GROSS PAY", "401K");
-    
-    System.out.printf(payrollExpense);
-    System.out.printf("\nExiting Weekly Hourly Payroll System\n");
   }
   
   /**
@@ -232,6 +230,15 @@ public class PatelRinconAlphaOrder002PA2
   }
   
   public static String formatDollarSign(String employeeName, double grossPay, double retire401K){
+    if(trigger == 1)
+    {
+      System.out.printf("%n%-30s %8s $%,15.2f %8s $%,13.2f", employeeName, " ", grossPay, " ", retire401K);
+      trigger = 0;
+    }
+    else
+    {
+      System.out.printf("%n%-30s %9s %,15.2f %9s %,13.2f", employeeName, " ", grossPay, " ", retire401K);
+    }
     return "Howdy";
   }
   
